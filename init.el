@@ -48,3 +48,11 @@
 (require 'ymacs-global-keybindings)
 (require 'ymacs-ivy)
 
+;; macOS specific settings
+(when (eq system-type 'darwin)
+  (require 'ymacs-macos))
+
+;; Linux specific settings
+(when (eq system-type 'gnu/linux)
+  (require 'ymacs-linux))
+
