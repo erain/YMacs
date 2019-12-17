@@ -152,13 +152,6 @@
 (setq bookmark-default-file (expand-file-name "bookmarks" ymacs-savefile-dir)
       bookmark-save-flag t)
 
-;; projectile is a project management mode
-(use-package projectile
-  :config
-  (setq projectile-cache-file (expand-file-name  "projectile.cache" ymacs-savefile-dir))
-  (projectile-mode t)
-  )
-
 ;; avy allows us to effectively navigate to visible things
 (use-package avy
   :config
