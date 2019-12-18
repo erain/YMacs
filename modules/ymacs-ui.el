@@ -55,11 +55,15 @@
   :config
   (which-key-mode t))
 
+;; font settings
+(set-frame-font "-*-Fira Code-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")
+
 ;; install and set theme for terminal / X
 (use-package gruvbox-theme)
+(use-package monokai-theme)
 (if (display-graphic-p)
     ;; (load-theme 'leuven t)
-    (load-theme 'gruvbox-light-hard t)  
+    (load-theme 'monokai t)
   (load-theme 'gruvbox-dark-hard t))
 
 (provide 'ymacs-ui)

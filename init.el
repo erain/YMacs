@@ -48,6 +48,7 @@
 (require 'ymacs-global-keybindings)
 (require 'ymacs-ivy)
 (require 'ymacs-projectile-helm)
+(require 'ymacs-programming)
 
 ;; macOS specific settings
 (when (eq system-type 'darwin)
