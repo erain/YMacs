@@ -49,6 +49,7 @@
 (require 'ymacs-ivy)
 (require 'ymacs-projectile-helm)
 (require 'ymacs-programming)
+(require 'ymacs-company)
 
 ;; macOS specific settings
 (when (eq system-type 'darwin)
