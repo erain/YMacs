@@ -22,4 +22,10 @@
   (global-company-mode 1)
   )
 
+(use-package company-quickhelp
+ :config
+   (setq company-quickhelp-delay 0.1)
+   (company-quickhelp-mode)
+)
+
 (provide 'ymacs-company)
