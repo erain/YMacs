@@ -22,6 +22,8 @@
   "The root dir of the YMacs distribution.")
 (defvar ymacs-modules-dir (expand-file-name "modules" ymacs-dir)
   "The directory houses all of the modules.")
+(defvar ymacs-vendor-dir (expand-file-name "vendor" ymacs-dir)
+  "The directory houses all of the vendored modules. (e.g. env related)")
 (defvar ymacs-savefile-dir (expand-file-name "savefile" ymacs-dir)
   "This folder stores all the automatically generated save/history-files.")
 (unless (file-exists-p ymacs-savefile-dir)
@@ -30,7 +32,7 @@
 ;; config changes made through the customize UI will be stored here
 (setq custom-file (expand-file-name "custom.el" ymacs-modules-dir))
 
-;; add Prelude's directories to Emacs's `load-path'
+;; add modules directories to Emacs's `load-path'
 (add-to-list 'load-path ymacs-modules-dir)
 
 ;; reduce the frequency of garbage collection by making it happen on
@@ -59,3 +61,5 @@
 (when (eq system-type 'gnu/linux)
   (require 'ymacs-linux))
 
+;; load all vendor configs
+(mapc 'load (file-expand-wildcards (expand-file-name "*.el" ymacs-vendor-dir)))
