@@ -215,4 +215,11 @@
 ;; install and use magit
 (use-package magit)
 
+;; install and use neotree
+(use-package neotree
+  :config
+  (global-set-key [f8] 'neotree-toggle)
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  )
+
 (provide 'ymacs-core)

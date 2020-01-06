@@ -34,7 +34,7 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch)
 
-(global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "M-z") 'er/expand-region)
 
 (global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
 (global-set-key (kbd "s-.") 'avy-goto-word-or-subword-1)
