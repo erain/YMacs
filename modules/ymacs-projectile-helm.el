@@ -46,8 +46,9 @@
   :init
   (use-package helm-projectile
     :ensure t
-    :bind (("C-c p f" . helm-projectile-find-file)
-           ("C-c P" . helm-projectile-switch-project)))
+    :bind (("C-c P" . helm-projectile-switch-project)
+           ("C-c p f" . helm-projectile-find-file)
+           ("C-c p g" . helm-projectile-grep)))
   :config
   (setq projectile-cache-file (expand-file-name  "projectile.cache" ymacs-savefile-dir))
   (projectile-global-mode)
