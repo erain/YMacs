@@ -8,4 +8,12 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+
+(use-package go-mode
+  :config
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save))
+
+
 (provide 'ymacs-programming)
+;;; ymacs-programming.el ends here

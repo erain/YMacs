@@ -51,7 +51,7 @@
 (require 'ymacs-ivy)
 (require 'ymacs-projectile-helm)
 (require 'ymacs-programming)
-(require 'ymacs-company)
+(require 'ymacs-lsp)
 
 ;; macOS specific settings
 (when (eq system-type 'darwin)
