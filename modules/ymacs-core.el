@@ -227,5 +227,7 @@
   ("C-a" . mwim-beginning-of-code-or-line)
   ("C-e" . mwim-end-of-code-or-line))
 
+;; remove trailing spaces when on save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (provide 'ymacs-core)

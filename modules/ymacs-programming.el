@@ -11,6 +11,7 @@
 
 (use-package go-mode
   :config
+  (setq tab-width 2)
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save))
 
