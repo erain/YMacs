@@ -14,7 +14,7 @@
          ("C-x C-f" . helm-find-files)
          ("C-h f" . helm-apropos)
          ("C-h r" . helm-info-emacs)
-         ("C-h C-l" . helm-locale-library)         
+         ("C-h C-l" . helm-locale-library)
          )
   :init
   (setq helm-M-x-fuzzy-match                  t
@@ -31,6 +31,9 @@
   ;; Helm again.
   (helm-mode 1)
   (helm-autoresize-mode 1)
+  (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
+  (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-z") #'helm-select-action)
   (add-to-list 'helm-completing-read-handlers-alist '(find-file . helm-completing-read-symbols)))
 
 (use-package helm-ag
@@ -48,6 +51,8 @@
     :ensure t
     :bind (("C-c P" . helm-projectile-switch-project)
            ("C-c p f" . helm-projectile-find-file)
+           ("C-c p d" . helm-projectile-find-dir)
+           ("C-c p s" . helm-projectile-ag)
            ("C-c p g" . helm-projectile-grep)))
   :config
   (setq projectile-cache-file (expand-file-name  "projectile.cache" ymacs-savefile-dir))
