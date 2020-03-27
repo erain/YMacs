@@ -86,7 +86,9 @@
   (setq sp-autoskip-closing-pair 'always)
   (setq sp-hybrid-kill-entire-symbol nil)
   (sp-use-paredit-bindings)
-  (show-smartparens-global-mode t))
+
+  (smartparens-global-mode t)
+  )
 
 ;; disable annoying blink-matching-paren
 (setq blink-matching-paren nil)
