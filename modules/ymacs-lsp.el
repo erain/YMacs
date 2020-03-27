@@ -1,9 +1,15 @@
 ;;; ymacs-lsp.el --- lsp + company-mode configs
 
+(use-package ccls
+  :hook ((c-mode c++-mode objc-mode cuda-mode) .
+         (lambda () (require 'ccls) (lsp))))
+
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
+  :init
+  (global-flycheck-mode)
+  )
 
 
 (use-package yasnippet                  ; Snippets
@@ -94,6 +100,8 @@
   (setq lsp-prefer-flymake nil          ; Prefer using lsp-ui (flycheck) over flymake
         lsp-enable-xref t
         lsp-enable-snippet t)
+  (setq-default flycheck-disabled-checkers
+                '(c/c++-clang c/c++-cppcheck c/c++-gcc))
   )
 
 
