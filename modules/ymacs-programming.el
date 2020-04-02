@@ -11,8 +11,13 @@
 
 (use-package go-mode
   :config
-  (setq tab-width 2)
-  (setq gofmt-command "goimports")
+	(add-hook 'go-mode-hook (lambda ()
+														(setq tab-width 2)
+														(setq indent-tabs-mode nil) ))
+	(setq gofmt-command (cond
+											 ((executable-find "goimports")
+												"goimports")
+											 (t "gofmt")))
   (add-hook 'before-save-hook 'gofmt-before-save))
 
 

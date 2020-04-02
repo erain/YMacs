@@ -96,6 +96,7 @@
   :commands lsp
   :hook
   (go-mode . #'lsp)
+  (python-mode . #'lsp)
   :config
   (setq lsp-prefer-flymake nil          ; Prefer using lsp-ui (flycheck) over flymake
         lsp-enable-xref t
