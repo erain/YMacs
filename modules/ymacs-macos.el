@@ -13,7 +13,11 @@
 (when (fboundp 'set-fontset-font)
   (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
 
+;; Enable quick ui focus
+(x-focus-frame nil)
+
+;; start the emacsserver that listens to emacsclient
+(server-start)
 
 (provide 'ymacs-macos)
 ;;; prelude-macos.el ends here
-

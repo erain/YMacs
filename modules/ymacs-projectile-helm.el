@@ -33,7 +33,7 @@
   (helm-autoresize-mode 1)
   (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
   (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-z") #'helm-select-action)
+  (define-key helm-map (kbd "C-j") #'helm-select-action)
   (add-to-list 'helm-completing-read-handlers-alist '(find-file . helm-completing-read-symbols)))
 
 (use-package helm-ag
