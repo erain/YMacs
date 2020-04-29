@@ -93,7 +93,11 @@
 
 
 (use-package lsp-mode
+  :ensure t
   :commands lsp
+  :init
+  (setq   lsp-gopls-server-path "gopls"
+	  lsp-gopls-server-args '("--debug=localhost:6060"))
   :hook
   (go-mode . #'lsp)
   (python-mode . #'lsp)
