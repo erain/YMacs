@@ -8,7 +8,11 @@
   :defer 0.1
   :diminish
   :bind (("C-c C-r" . ivy-resume)
-         ("C-x B" . ivy-switch-buffer-other-window))
+         ("C-x B" . ivy-switch-buffer-other-window)
+	 ("C-x C-q" . ivy-wgrep-change-to-wgrep-mode)
+	 ("C-x C-c" . wgrep-finish-edit)
+	 ("C-c C-o" . ivy-occur)
+	 )
   :custom
   (ivy-count-format "(%d/%d) ")
   (ivy-use-virtual-buffers t)
@@ -17,7 +21,8 @@
 (use-package swiper
   :after ivy
   :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
+         ("C-r" . swiper)
+	 ))
 
 (use-package avy
   :ensure t

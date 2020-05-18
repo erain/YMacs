@@ -78,6 +78,15 @@
 ;; smart tab behavior - indent or complete
 (setq tab-always-indent 'complete)
 
+;; multicursor
+(use-package multiple-cursors
+  :ensure t
+  :bind (;; highlighting symbols only
+	 ("C-M->" . mc/mark-next-symbol-like-this)
+	 ("C-M-<" . mc/mark-previous-symbol-like-this)
+	 ("C-M-*" . mc/mark-all-symbols-like-this)
+	 ))
+
 ;; smart pairing
 (use-package smartparens
   :config
