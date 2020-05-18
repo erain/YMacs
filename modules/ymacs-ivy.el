@@ -8,9 +8,8 @@
   :defer 0.1
   :diminish
   :bind (("C-c C-r" . ivy-resume)
-         ("C-x B" . ivy-switch-buffer-other-window)
 	 ("C-x C-q" . ivy-wgrep-change-to-wgrep-mode)
-	 ("C-x C-c" . wgrep-finish-edit)
+	 ("C-c C-s" . wgrep-auto-save-buffer)
 	 ("C-c C-o" . ivy-occur)
 	 )
   :custom
