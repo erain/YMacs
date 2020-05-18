@@ -19,4 +19,8 @@
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
 
+(use-package avy
+  :ensure t
+  :bind ("M-s" . avy-goto-char))
+
 (provide 'ymacs-ivy)
