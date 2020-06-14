@@ -238,6 +238,13 @@
   ("C-a" . mwim-beginning-of-code-or-line)
   ("C-e" . mwim-end-of-code-or-line))
 
+;; eshell configurations
+(require 'eshell)
+(require 'em-smart)
+(setq eshell-where-to-jump 'begin)
+(setq eshell-review-quick-commands nil)
+(setq eshell-smart-space-goes-to-end t)
+
 ;; remove trailing spaces when on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
