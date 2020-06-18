@@ -64,7 +64,7 @@
 
 (use-package hydra
   :defer 2
-  :bind ("C-c C-l" . hydra-lsp/body))
+  :bind ("C-c l" . hydra-lsp/body))
 
 
 (defhydra hydra-lsp (:exit t :hint nil)
@@ -101,6 +101,9 @@
   :hook
   (go-mode . #'lsp)
   (python-mode . #'lsp)
+  (c-mode . #'lsp)
+  (c++-mode . #'lsp)
+
   :config
   (setq lsp-prefer-flymake nil          ; Prefer using lsp-ui (flycheck) over flymake
         lsp-enable-xref t

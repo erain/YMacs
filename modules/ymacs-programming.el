@@ -11,15 +11,22 @@
 
 (use-package go-mode
   :config
-	(add-hook 'go-mode-hook (lambda ()
-														(setq tab-width 2)
-														(setq indent-tabs-mode nil) ))
-	(setq gofmt-command (cond
-											 ((executable-find "goimports")
-												"goimports")
-											 (t "gofmt")))
+  (add-hook 'go-mode-hook (lambda ()
+			    (setq tab-width 2)
+			    (setq indent-tabs-mode nil) ))
+  (setq gofmt-command (cond
+		       ((executable-find "goimports")
+			"goimports")
+		       (t "gofmt")))
   (add-hook 'before-save-hook 'gofmt-before-save))
 
+
+(defun ymacs-c-mode-common-hook ()
+  (setq c-basic-offset 4)
+  (setq tab-width 4)
+  (setq indent-tabs-mode t)
+  )
+(add-hook 'c-mode-common-hook 'ymacs-c-mode-common-hook)
 
 (provide 'ymacs-programming)
 ;;; ymacs-programming.el ends here
