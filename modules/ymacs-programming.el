@@ -18,7 +18,7 @@
 		       ((executable-find "goimports")
 			"goimports")
 		       (t "gofmt")))
-  (add-hook 'before-save-hook 'gofmt-before-save))
+  )
 
 
 (defun ymacs-c-mode-common-hook ()

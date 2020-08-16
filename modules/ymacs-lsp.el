@@ -17,7 +17,9 @@
   :config
   (use-package yasnippet-snippets       ; Collection of snippets
     :ensure t)
-  (yas-global-mode t))
+  :commands yas-minor-mode
+  :hook (go-mode . yas-minor-mode)
+  )
 
 
 (use-package company
@@ -94,15 +96,15 @@
 
 (use-package lsp-mode
   :ensure t
-  :commands lsp
+  :commands (lsp lsp-deferred)
   :init
-  (setq   lsp-gopls-server-path "gopls"
-	  lsp-gopls-server-args '("--debug=localhost:6060"))
+  (setq lsp-gopls-server-path "gopls"
+	lsp-gopls-server-args '("--debug=localhost:6060"))
   :hook
-  (go-mode . #'lsp)
-  (python-mode . #'lsp)
-  (c-mode . #'lsp)
-  (c++-mode . #'lsp)
+  (go-mode . lsp-deferred)
+  (python-mode . lsp-deferred)
+  (c-mode . lsp-deferred)
+  (c++-mode . lsp-deferred)
 
   :config
   (setq lsp-prefer-flymake nil          ; Prefer using lsp-ui (flycheck) over flymake
@@ -114,6 +116,7 @@
 
 
 (use-package lsp-ui
+  :ensure t
   :commands lsp-ui-mode
   :hook
   (lsp-mode . lsp-ui-mode)
@@ -131,5 +134,11 @@
         lsp-ui-peek-peek-height 25)
   )
 
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
 (provide 'ymacs-lsp)
