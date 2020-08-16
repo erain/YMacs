@@ -16,6 +16,10 @@
 ;; Enable quick ui focus
 (x-focus-frame nil)
 
+;; Open files in the same window
+;; https://www.reddit.com/r/emacs/comments/f81ei5/emacs_on_macos_having_files_open_in_same_window/
+(setq ns-pop-up-frames nil)
+
 ;; start the emacsserver that listens to emacsclient
 (server-start)
 
