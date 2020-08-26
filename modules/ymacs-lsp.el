@@ -99,7 +99,9 @@
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-gopls-server-path "gopls"
-	lsp-gopls-server-args '("--debug=localhost:6060"))
+	lsp-gopls-server-args '("--debug=localhost:6060")
+	lsp-enable-file-watchers t
+	)
   :hook
   (go-mode . lsp-deferred)
   (python-mode . lsp-deferred)
