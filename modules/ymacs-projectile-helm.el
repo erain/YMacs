@@ -15,8 +15,12 @@
          ("C-h f" . helm-apropos)
          ("C-h r" . helm-info-emacs)
          ("C-h C-l" . helm-locale-library)
+         ("C-c h o" . helm-occur)
          )
   :init
+  (use-package helm-descbinds
+    :config
+    (helm-descbinds-mode))
   (setq helm-M-x-fuzzy-match                  t
         helm-split-window-in-side-p           t
         helm-buffers-fuzzy-matching           t
