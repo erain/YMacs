@@ -3,7 +3,7 @@
 ;; Take care of the automatic installation of all the package required by
 ;; Ymacs
 
-(require 'cl)
+(require 'cl-lib)
 (require 'package)
 
 (setq package-archives
@@ -25,4 +25,3 @@
 (setq use-package-always-ensure t)
 
 (provide 'ymacs-packages)
-
