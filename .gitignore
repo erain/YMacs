@@ -21,6 +21,7 @@ session*
 .cask
 tramp
 /var/pcache
+.cache
 .emacs.desktop
 .emacs.desktop.lock
 network-security.data
