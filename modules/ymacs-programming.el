@@ -1,5 +1,6 @@
 ;;; ymacs-programming.el --- a bunch of programming langeuage related mode
 
+;; Markdown mode
 (use-package markdown-mode
 
   :commands (markdown-mode gfm-mode)
@@ -9,7 +10,9 @@
   :init (setq markdown-command "multimarkdown"))
 
 
+;; Go mode
 (use-package go-mode
+  :bind ("C-c C-t" . save-and-test-go-program)
   :config
   (add-hook 'go-mode-hook (lambda ()
 			    (setq tab-width 2)
@@ -20,7 +23,15 @@
 		       (t "gofmt")))
   )
 
+(defun save-and-test-go-program()
+  "Save any unsaved buffers and compile"
+  (interactive)
+  (save-some-buffers t)
+  (compile "go test -v")
+  )
 
+
+;; C mode
 (defun ymacs-c-mode-common-hook ()
   (setq c-basic-offset 4)
   (setq tab-width 4)
