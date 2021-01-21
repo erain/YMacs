@@ -242,6 +242,10 @@
 ;; remove trailing spaces when on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; follow symlinks.
+(setq vc-follow-symlinks t)
+
+
 ;; treemacs
 (use-package treemacs
   :ensure t

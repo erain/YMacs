@@ -39,5 +39,14 @@
   )
 (add-hook 'c-mode-common-hook 'ymacs-c-mode-common-hook)
 
+
+;; Jsonnet mode
+(use-package jsonnet-mode
+  :ensure t
+  :defer t
+  :mode ("\\.jsonnet\\'" "\\.libsonnet\\'")
+  )
+
+
 (provide 'ymacs-programming)
 ;;; ymacs-programming.el ends here
