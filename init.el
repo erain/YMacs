@@ -45,6 +45,7 @@
 (require 'ymacs-projectile-helm)
 (require 'ymacs-programming)
 (require 'ymacs-lsp)
+(require 'ymacs-eshell)
 
 ;; macOS specific settings
 (when (eq system-type 'darwin)
