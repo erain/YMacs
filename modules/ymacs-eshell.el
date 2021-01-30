@@ -1,5 +1,11 @@
 ;;; ymacs-eshell.el --- eshell specific settings.
 
+(require 'eshell)
+(require 'em-smart)
+(setq eshell-where-to-jump 'begin)
+(setq eshell-review-quick-commands nil)
+(setq eshell-smart-space-goes-to-end t)
+
 (defun eshell-here ()
   "Opens up a new shell in the directory associated with the
     current buffer's file. The eshell is renamed to match that
@@ -18,7 +24,7 @@
     (insert (concat "ls"))
     (eshell-send-input)))
 
-(global-set-key (kbd "C-M-1") 'eshell-here)
+(global-set-key (kbd "C-c s") 'eshell-here)
 
 (defun eshell/x ()
   (insert "exit")
