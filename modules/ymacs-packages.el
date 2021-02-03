@@ -7,9 +7,11 @@
 (require 'package)
 
 (setq package-archives
-      '(("marmalade"   . "http://marmalade-repo.org/packages/")
+      '(;; It seems marmalade repo has something wrong when connecting
+        ;; ("marmalade"   . "http://marmalade-repo.org/packages/")
+        ;; Not that useful since not using org mode extensively
+        ;; ("org"         . "http://orgmode.org/elpa/")
         ("gnu"         . "http://elpa.gnu.org/packages/")
-        ("org"         . "http://orgmode.org/elpa/")
         ("melpa"       . "https://melpa.org/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
