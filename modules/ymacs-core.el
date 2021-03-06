@@ -313,10 +313,9 @@
   (:map global-map
 	("M-0"       . treemacs-select-window)
 	("C-x t 1"   . treemacs-delete-other-windows)
-	("C-t"   . treemacs)
+	("C-x t t"   . treemacs)
 	("C-x t b"   . treemacs-bookmark)
-	("C-x t f" . treemacs-find-file)
-	("C-x t t" . treemacs-find-tag)))
+	("C-x t f" . treemacs-find-file)))
 
 (use-package treemacs-projectile
   :after treemacs projectile
