@@ -41,7 +41,8 @@
                                             "%b"))))
 
 ;; highlight current line:
-(global-hl-line-mode nil)
+(use-package hl-line
+  :init (global-hl-line-mode 1))
 
 ;; whitespace-mode config
 (use-package whitespace
@@ -64,11 +65,28 @@
 ;; install and set theme for terminal / X
 (use-package gruvbox-theme)
 (use-package leuven-theme)
-(use-package doom-themes)
+(use-package doom-themes
+  :config
+  (use-package all-the-icons
+    :ensure t)
+
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+  (doom-themes-treemacs-config)
+  )
 (if (display-graphic-p)
-    ;; (load-theme 'leuven t)
-    (load-theme 'doom-tomorrow-day t)
-    ;; (load-theme 'gruvbox-light-hard t)
-  (load-theme 'gruvbox-dark-hard t))
+  ;; (load-theme 'leuven t)
+  (load-theme 'doom-tomorrow-day t)
+  ;; (load-theme 'gruvbox-light-hard t)
+(load-theme 'gruvbox-dark-hard t)
+;; (load-theme 'doom-vibrant t)
+)
 
 (provide 'ymacs-ui)

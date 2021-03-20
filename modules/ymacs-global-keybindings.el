@@ -48,7 +48,10 @@
 
 ;; improved window navigation with ace-window
 (use-package ace-window)
-(global-set-key (kbd "s-w") 'ace-window)
+(global-set-key (kbd "M-o") 'ace-window)
 (global-set-key [remap other-window] 'ace-window)
+
+;; enable shift + mouse selection
+(define-key global-map (kbd "<S-down-mouse-1>") 'mouse-save-then-kill)
 
 (provide 'ymacs-global-keybindings)
