@@ -58,6 +58,20 @@
     (eshell-send-input)))
 (global-set-key (kbd "C-c s") 'eshell-here)
 
+(defun delete-single-window (&optional window)
+  "Remove WINDOW from the display.  Default is `selected-window'.
+    If WINDOW is the only one in its frame, then `delete-frame' too."
+  (interactive)
+  (save-current-buffer
+    (setq window (or window (selected-window)))
+    (select-window window)
+    (kill-buffer)
+    (if (one-window-p t)
+        (delete-frame)
+        (delete-window (selected-window)))))
+
+(defun eshell/x (&rest args)
+  (delete-single-window))
 
 (defun eshell/f (filename &optional dir try-count)
   "Searches for files matching FILENAME in either DIR or the
@@ -100,13 +114,6 @@ file to edit."
   "Wrapper around the ‘find’ executable."
   (let ((cmd (concat "find " (string-join args))))
     (shell-command-to-string cmd)))
-
-
-(defun eshell/x ()
-  (insert "exit")
-  (eshell-send-input)
-  (delete-window))
-
 
 (defun eshell/clear ()
   "Clear the eshell buffer."
