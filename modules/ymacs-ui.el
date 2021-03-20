@@ -63,10 +63,12 @@
 
 ;; install and set theme for terminal / X
 (use-package gruvbox-theme)
+(use-package leuven-theme)
 (use-package doom-themes)
 (if (display-graphic-p)
     ;; (load-theme 'leuven t)
-    (load-theme 'doom-gruvbox t)
+    (load-theme 'doom-tomorrow-day t)
+    ;; (load-theme 'gruvbox-light-hard t)
   (load-theme 'gruvbox-dark-hard t))
 
 (provide 'ymacs-ui)
