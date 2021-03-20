@@ -48,5 +48,19 @@
   )
 
 
+;; solidity mode
+(use-package solidity-mode
+  :ensure t
+  :config
+  (use-package solidity-flycheck
+    :ensure t)
+
+  (setq solidity-solc-path "/usr/local/bin/solcjs")
+  (setq solidity-solium-path "/usr/local/bin/solium")
+  (setq solidity-flycheck-solc-checker-active t)
+  (setq solidity-flycheck-solium-checker-active t)
+  (setq solidity-comment-style 'slash)
+  )
+
 (provide 'ymacs-programming)
 ;;; ymacs-programming.el ends here
