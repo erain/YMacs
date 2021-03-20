@@ -11,6 +11,9 @@
 ;; the blinking cursor is nothing, but an annoyance
 (blink-cursor-mode -1)
 
+;; Makr cursor as bar instead of block
+(setq-default cursor-type 'bar)
+
 ;; disable the annoying bell ring
 (setq ring-bell-function 'ignore)
 
@@ -60,10 +63,10 @@
 
 ;; install and set theme for terminal / X
 (use-package gruvbox-theme)
-(use-package monokai-theme)
+(use-package doom-themes)
 (if (display-graphic-p)
     ;; (load-theme 'leuven t)
-    (load-theme 'monokai t)
+    (load-theme 'doom-gruvbox t)
   (load-theme 'gruvbox-dark-hard t))
 
 (provide 'ymacs-ui)
