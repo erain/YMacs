@@ -62,5 +62,10 @@
   (setq solidity-comment-style 'slash)
   )
 
+
+;; javascript mode
+(setq js-indent-level 2)
+
+
 (provide 'ymacs-programming)
 ;;; ymacs-programming.el ends here
