@@ -54,6 +54,14 @@
   :config
   (use-package solidity-flycheck
     :ensure t)
+  (use-package company-solidity
+    :ensure t)
+
+  (add-hook 'solidity-mode-hook
+	(lambda ()
+	(set (make-local-variable 'company-backends)
+		(append '((company-solidity company-capf company-dabbrev-code))
+			company-backends))))
 
   (setq solidity-solc-path "/usr/local/bin/solcjs")
   (setq solidity-solium-path "/usr/local/bin/solium")
