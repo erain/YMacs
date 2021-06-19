@@ -53,18 +53,6 @@
   )
 
 
-(use-package company-lsp
-  :requires company
-  :commands company-lsp
-  :config
-  (push 'company-lsp company-backends)
-
-  ;; Disable client-side cache because the LSP server does a better job.
-  (setq company-transformers nil
-        company-lsp-async t
-        company-lsp-cache-candidates nil))
-
-
 (use-package hydra
   :defer 2
   :bind ("C-c l" . hydra-lsp/body))
