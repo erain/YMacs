@@ -62,13 +62,15 @@
 ;; font settings
 (set-frame-font "-*-Fira Code-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")
 
+;; icons
+(use-package all-the-icons
+    :ensure t)
+
 ;; install and set theme for terminal / X
 (use-package gruvbox-theme)
 (use-package leuven-theme)
 (use-package doom-themes
   :config
-  (use-package all-the-icons
-    :ensure t)
 
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
