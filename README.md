@@ -14,3 +14,12 @@ GO111MODULE=on go get golang.org/x/tools/cmd/...
 # Install gopls
 GO111MODULE=on go get golang.org/x/tools/gopls@latest
 ```
+
+## Python mode setup
+
+We need to have nave python language server installed
+
+``` bash
+pip install -U setuptools
+pip install 'python-language-server[all]'
+```
