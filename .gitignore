@@ -27,3 +27,5 @@ tramp
 network-security.data
 transient/
 .lsp-session*
+abbrev_defs
+eln-cache/
