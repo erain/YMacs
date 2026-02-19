@@ -11,7 +11,7 @@
         ;; ("marmalade"   . "http://marmalade-repo.org/packages/")
         ;; Not that useful since not using org mode extensively
         ;; ("org"         . "http://orgmode.org/elpa/")
-        ("gnu"         . "http://elpa.gnu.org/packages/")
+        ("gnu"         . "https://elpa.gnu.org/packages/")
         ("melpa"       . "https://melpa.org/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")))
 
@@ -19,8 +19,10 @@
 (setq package-user-dir (expand-file-name "elpa" ymacs-dir))
 (package-initialize)
 
+(unless package-archive-contents
+  (package-refresh-contents))
+
 (unless (package-installed-p 'use-package)
-  (package-refresh-contents)
   (package-install 'use-package))
 
 (require 'use-package)
