@@ -40,9 +40,6 @@
   (define-key helm-map (kbd "C-j") #'helm-select-action)
   (add-to-list 'helm-completing-read-handlers-alist '(find-file . helm-completing-read-symbols)))
 
-(use-package helm-ag
-  :bind ("C-c a g" . helm-do-ag-project-root))
-
 (use-package swiper-helm
   :bind ("C-s" . swiper-helm))
 
@@ -53,6 +50,7 @@
   :init
   (use-package helm-projectile
     :ensure t
+    :bind ("C-c a g" . helm-projectile-ag)
     :config
     (helm-projectile-on)
     )
