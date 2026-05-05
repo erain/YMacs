@@ -1,95 +1,80 @@
-;;; ymacs-ui.el -- UI optimization and tweaks.
+;;; ymacs-ui.el --- UI tweaks -*- lexical-binding: t; -*-
+;;
+;; Tool-bar / menu-bar / scroll-bar are killed in early-init.el so the
+;; first frame is drawn without them.
 
-;; the toolbar is just a waste of valuable screen estate
-;; in a tty tool-bar-mode does not properly auto-load, and is
-;; already disabled anyway
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-
-(menu-bar-mode -1)
-
-;; the blinking cursor is nothing, but an annoyance
 (blink-cursor-mode -1)
-
-;; Makr cursor as bar instead of block
 (setq-default cursor-type 'bar)
 
-;; disable the annoying bell ring
-(setq ring-bell-function 'ignore)
-
-;; disable startup screen
-(setq inhibit-startup-screen t)
-
-;; nice scrolling
-(setq scroll-margin 0
+(setq ring-bell-function 'ignore
+      use-short-answers t
+      scroll-margin 0
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
 
-;; mode line settings
-(line-number-mode t)
-(column-number-mode t)
-(size-indication-mode t)
+(line-number-mode 1)
+(column-number-mode 1)
+(size-indication-mode 1)
 
-;; enable y/n answers
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; more useful frame title, that show either a file or a
-;; buffer name (if the buffer isn't visiting a file)
 (setq frame-title-format
-      '("" invocation-name " Prelude - " (:eval (if (buffer-file-name)
-                                            (abbreviate-file-name (buffer-file-name))
-                                            "%b"))))
+      '("" invocation-name " YMacs - "
+        (:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
 
-;; highlight current line:
+;; Smoother trackpad / wheel scrolling (Emacs 29+, GUI only).
+(when (and (display-graphic-p)
+           (fboundp 'pixel-scroll-precision-mode))
+  (pixel-scroll-precision-mode 1))
+
+;; Survive opening minified / very-long-line files.
+(global-so-long-mode 1)
+
+;; Repeat-mode: e.g. C-x o o o for `other-window'.
+(repeat-mode 1)
+
 (use-package hl-line
+  :ensure nil
   :init (global-hl-line-mode 1))
 
-;; whitespace-mode config
 (use-package whitespace
+  :ensure nil
   :config
-  (setq whitespace-line-column 100) ;; limit line length
-  (setq whitespace-style '(face tabs empty trailing lines-tail))
-  )
+  (setq whitespace-line-column 100
+        whitespace-style '(face tabs empty trailing lines-tail)))
 
+;; beacon flashes the cursor on big jumps — only useful in a GUI.
 (use-package beacon
-  :config
-  (beacon-mode t))
+  :if (display-graphic-p)
+  :diminish beacon-mode
+  :config (beacon-mode 1))
 
+;; `which-key' is built-in since Emacs 30.
 (use-package which-key
-  :config
-  (which-key-mode t))
+  :ensure nil
+  :diminish which-key-mode
+  :config (which-key-mode 1))
 
-;; font settings
-(set-frame-font "-*-Fira Code-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")
+;; Font: only set if installed; otherwise fall back silently.
+(when (and (display-graphic-p)
+           (find-font (font-spec :name "Fira Code")))
+  (set-face-attribute 'default nil :font "Fira Code" :height 130))
 
-;; icons
-(use-package all-the-icons
-    :ensure t)
+;; Nerd-Font glyphs only render in a GUI; in a tty they show as boxes.
+(use-package nerd-icons
+  :if (display-graphic-p))
 
-;; install and set theme for terminal / X
 (use-package gruvbox-theme)
 (use-package leuven-theme)
 (use-package doom-themes
   :config
-
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-
-  ;; Enable flashing mode-line on errors
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
   (doom-themes-visual-bell-config)
+  (setq doom-themes-treemacs-theme "doom-colors")
+  (doom-themes-treemacs-config))
 
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
-  (doom-themes-treemacs-config)
-  )
-(if (display-graphic-p)
-    ;; (load-theme 'leuven t)
-    ;; (load-theme 'doom-tomorrow-day t)
-    ;; (load-theme 'gruvbox-light-hard t)
-    (load-theme 'gruvbox-dark-hard t)
-  (load-theme 'gruvbox-dark-hard t)
-  ;; (load-theme 'doom-vibrant t)
-  )
+(load-theme 'gruvbox-dark-hard t)
 
 (provide 'ymacs-ui)
+;;; ymacs-ui.el ends here

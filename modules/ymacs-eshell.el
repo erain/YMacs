@@ -1,8 +1,9 @@
-;;; ymacs-eshell.el --- eshell specific settings.
-;;; Reference https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
-
+;;; ymacs-eshell.el --- eshell tweaks -*- lexical-binding: t; -*-
+;;
+;; Reference: https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
 
 (require 'em-smart)
+(use-package s)  ; eshell/f and eshell/ef use s-blank-str? / s-split
 (setenv "PAGER" "cat")
 
 (use-package eshell
