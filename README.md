@@ -1,25 +1,42 @@
 # YMacs
 
-This is erain@'s personal emacs configurations.
+erain@'s personal Emacs configuration. Heavily inspired by
+[prelude](https://github.com/bbatsov/prelude). If you want an out-of-the-box
+config, use that — this one is forked so I can understand and control every
+piece.
 
-The configurations were heavily inspired by [prelude](https://github.com/bbatsov/prelude). If  you are looking for an out-of-the-box emacs configurations, my suggestion is to use that. I forked/rewrite of prelude simply because I want to learn, understand and control all my emacs configurations.
+## Requirements
 
-## Go mode setup
+- **GNU Emacs 29.1 or newer** (uses built-in `use-package`, `treesit`,
+  `pixel-scroll-precision-mode`, `so-long`, etc.).
+- A Nerd Font for icons. After first launch run `M-x nerd-icons-install-fonts`.
+- Tree-sitter grammars are installed on demand by `treesit-auto`; accept the
+  prompt the first time you visit a file in a new language.
 
-There are some extra toolings needed to be set up for Go programming.
+## Go
 
-``` bash
-# Install go tools
-GO111MODULE=on go get golang.org/x/tools/cmd/...
-# Install gopls
-GO111MODULE=on go get golang.org/x/tools/gopls@latest
+```bash
+go install golang.org/x/tools/gopls@latest
+go install golang.org/x/tools/cmd/goimports@latest
 ```
 
-## Python mode setup
+## Python
 
-We need to have nave python language server installed
+```bash
+pip install -U python-lsp-server[all]   # `pylsp`
+```
 
-``` bash
-pip install -U setuptools
-pip install 'python-language-server[all]'
+## C / C++
+
+Install [`ccls`](https://github.com/MaskRay/ccls) on `PATH`.
+
+## Solidity
+
+`solcjs` and `solium` are looked up at `/usr/local/bin/`. Override the paths in
+`modules/ymacs-programming.el` if installed elsewhere.
+
+## Markdown
+
+```bash
+brew install multimarkdown   # or apt install libtext-multimarkdown-perl
 ```

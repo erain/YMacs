@@ -1,4 +1,4 @@
-;;; ymacs-programming.el --- a bunch of programming langeuage related mode
+;;; ymacs-programming.el --- Programming language modes -*- lexical-binding: t; -*-
 
 ;; Markdown mode
 (use-package markdown-mode

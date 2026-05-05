@@ -1,4 +1,4 @@
-;;; ymacs-global-keybindings.el --- some useful keybindings.
+;;; ymacs-global-keybindings.el --- Some useful keybindings -*- lexical-binding: t; -*-
 
 ;; crux related
 (use-package crux)
@@ -35,8 +35,7 @@
 
 (global-set-key (kbd "C-c m") 'imenu)
 
-(global-set-key (kbd "C-c j") 'avy-goto-word-or-subword-1)
-(global-set-key (kbd "s-.") 'avy-goto-word-or-subword-1)
+;; avy `C-c j' / `s-.' bindings live in ymacs-core.el alongside the use-package decl.
 
 (defun match-paren (arg)
   "Go to the matching paren if on a paren; otherwise insert %."

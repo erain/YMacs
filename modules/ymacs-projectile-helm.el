@@ -1,63 +1,55 @@
-;;; ymacs-projectile-helm.el --- projectile and helm related settings
-
-;; More reference:
+;;; ymacs-projectile-helm.el --- helm + projectile -*- lexical-binding: t; -*-
+;;
+;; References:
 ;; - https://tuhdo.github.io/helm-intro.html
 ;; - https://tuhdo.github.io/helm-projectile.html
 
 (use-package helm
   :diminish helm-mode
-  :bind (("M-x" . helm-M-x)
+  :bind (("M-x"     . helm-M-x)
          ("C-x C-f" . helm-find-files)
-         ("M-y" . helm-show-kill-ring)
-         ("C-x b" . helm-mini)
+         ("M-y"     . helm-show-kill-ring)
+         ("C-x b"   . helm-mini)
          ("C-x C-b" . helm-buffers-list)
-         ("C-x C-f" . helm-find-files)
-         ("C-h f" . helm-apropos)
-         ("C-h r" . helm-info-emacs)
-         ("C-h C-l" . helm-locale-library)
-         ("C-c h o" . helm-occur)
-         )
+         ("C-h f"   . helm-apropos)
+         ("C-h r"   . helm-info-emacs)
+         ("C-h C-l" . helm-locate-library)
+         ("C-c h o" . helm-occur))
   :init
-  (use-package helm-descbinds
-    :config
-    (helm-descbinds-mode))
   (setq helm-M-x-fuzzy-match                  t
-        helm-split-window-in-side-p           t
+        helm-split-window-inside-p            t
         helm-buffers-fuzzy-matching           t
         helm-move-to-line-cycle-in-source     t
         helm-ff-search-library-in-sexp        t
         helm-display-header-line              nil
-        helm-ff-file-name-history-use-recentf t
-        )
+        helm-ff-file-name-history-use-recentf t)
   :config
-  ;; No idea why here find-file is set to nil (so it uses the native find-file
-  ;; for Emacs. This makes stuff like (find-file (read-file-name ...)) work with
-  ;; Helm again.
   (helm-mode 1)
   (helm-autoresize-mode 1)
-  (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
+  (define-key helm-map (kbd "TAB")   #'helm-execute-persistent-action)
   (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
-  (define-key helm-map (kbd "C-j") #'helm-select-action)
-  (add-to-list 'helm-completing-read-handlers-alist '(find-file . helm-completing-read-symbols)))
+  (define-key helm-map (kbd "C-j")   #'helm-select-action))
+
+(use-package helm-descbinds
+  :after helm
+  :config (helm-descbinds-mode))
 
 (use-package swiper-helm
   :bind ("C-s" . swiper-helm))
 
-;; Project management.
 (use-package projectile
-  :commands (projectile-find-file projectile-switch-project)
   :diminish projectile-mode
   :init
-  (use-package helm-projectile
-    :ensure t
-    :bind ("C-c a g" . helm-projectile-ag)
-    :config
-    (helm-projectile-on)
-    )
+  (setq projectile-cache-file
+        (expand-file-name "projectile.cache" ymacs-savefile-dir))
   :config
-  (setq projectile-cache-file (expand-file-name  "projectile.cache" ymacs-savefile-dir))
-  (projectile-global-mode)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  )
+  (projectile-mode 1)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+(use-package helm-projectile
+  :after (helm projectile)
+  :bind ("C-c a g" . helm-projectile-ag)
+  :config (helm-projectile-on))
 
 (provide 'ymacs-projectile-helm)
+;;; ymacs-projectile-helm.el ends here
