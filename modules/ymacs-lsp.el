@@ -24,7 +24,9 @@
         company-idle-delay                 0)
   (global-company-mode 1))
 
+;; company-quickhelp uses pos-tip frames — graphical only.
 (use-package company-quickhelp
+  :if (display-graphic-p)
   :after company
   :config
   (setq company-quickhelp-delay 0.1)
@@ -77,14 +79,16 @@
   :commands lsp-ui-mode
   :hook (lsp-mode . lsp-ui-mode)
   :config
-  (setq lsp-ui-doc-enable             t
-        lsp-ui-doc-use-childframe     t
-        lsp-ui-doc-position           'top
-        lsp-ui-doc-include-signature  t
-        lsp-ui-sideline-enable        nil
-        lsp-ui-peek-enable            t
-        lsp-ui-peek-list-width        60
-        lsp-ui-peek-peek-height       25))
+  ;; child-frames + doc-popup require a GUI; disable in tty.
+  (let ((gui (display-graphic-p)))
+    (setq lsp-ui-doc-enable            gui
+          lsp-ui-doc-use-childframe    gui
+          lsp-ui-doc-position          'top
+          lsp-ui-doc-include-signature t
+          lsp-ui-sideline-enable       nil
+          lsp-ui-peek-enable           t
+          lsp-ui-peek-list-width       60
+          lsp-ui-peek-peek-height      25)))
 
 (use-package ccls
   :hook ((c-mode c++-mode objc-mode cuda-mode) .

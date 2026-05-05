@@ -135,6 +135,7 @@
 (require 'dired-x)
 
 (use-package nerd-icons-dired
+  :if (display-graphic-p)
   :hook (dired-mode . nerd-icons-dired-mode))
 
 ;; ediff in one frame, side-by-side.
@@ -226,6 +227,7 @@
 (use-package treemacs-projectile :after (treemacs projectile))
 (use-package treemacs-magit      :after (treemacs magit))
 (use-package treemacs-nerd-icons
+  :if (display-graphic-p)
   :after treemacs
   :config (treemacs-load-theme "nerd-icons"))
 

@@ -22,8 +22,9 @@
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
-;; Smoother trackpad / wheel scrolling (Emacs 29+).
-(when (fboundp 'pixel-scroll-precision-mode)
+;; Smoother trackpad / wheel scrolling (Emacs 29+, GUI only).
+(when (and (display-graphic-p)
+           (fboundp 'pixel-scroll-precision-mode))
   (pixel-scroll-precision-mode 1))
 
 ;; Survive opening minified / very-long-line files.
@@ -42,7 +43,9 @@
   (setq whitespace-line-column 100
         whitespace-style '(face tabs empty trailing lines-tail)))
 
+;; beacon flashes the cursor on big jumps — only useful in a GUI.
 (use-package beacon
+  :if (display-graphic-p)
   :diminish beacon-mode
   :config (beacon-mode 1))
 
@@ -57,7 +60,9 @@
            (find-font (font-spec :name "Fira Code")))
   (set-face-attribute 'default nil :font "Fira Code" :height 130))
 
-(use-package nerd-icons)
+;; Nerd-Font glyphs only render in a GUI; in a tty they show as boxes.
+(use-package nerd-icons
+  :if (display-graphic-p))
 
 (use-package gruvbox-theme)
 (use-package leuven-theme)
