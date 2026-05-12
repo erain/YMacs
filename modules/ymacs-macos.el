@@ -11,9 +11,8 @@
 ;; Re-enable the menu bar — there's no display cost on macOS.
 (menu-bar-mode 1)
 
-;; Native emoji rendering without UI freezes.
-(when (fboundp 'set-fontset-font)
-  (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
+;; GUI font families, emoji and Unicode fallbacks are configured in
+;; `ymacs-ui' so daemon/client frames share the same setup.
 
 ;; Open files in the same frame.
 (setq ns-pop-up-frames nil)

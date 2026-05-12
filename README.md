@@ -9,6 +9,11 @@ piece.
 
 - **GNU Emacs 29.1 or newer** (uses built-in `use-package`, `treesit`,
   `pixel-scroll-precision-mode`, `so-long`, etc.).
+- For GUI Emacs, install a good programming font. YMacs prefers
+  **JetBrains Mono** (Ghostty-style/community-favorite choice), then Fira Code /
+  SF Mono / other popular coding fonts if available. Restart Emacs or run
+  `M-x ymacs-setup-fonts` after installing a new font. Terminal Emacs inherits
+  your terminal font (for example, Ghostty's `font-family`).
 - A Nerd Font for icons (GUI only). After first launch run
   `M-x nerd-icons-install-fonts`.
 - Tree-sitter grammars are installed on demand by `treesit-auto`; accept the
