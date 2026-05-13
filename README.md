@@ -67,6 +67,19 @@ Install [`ccls`](https://github.com/MaskRay/ccls) on `PATH`.
 
 ## Markdown
 
+YMacs uses `gfm-mode` for `.md`/`.mdx`, pretty prose layout, native fenced-code
+fontification, optional spell checking, `markdown-toc`, and `grip-mode` for a
+GitHub-accurate browser preview.
+
+Recommended tools:
+
 ```bash
-brew install multimarkdown   # or apt install libtext-multimarkdown-perl
+brew install pandoc marksman hunspell   # preview/export, LSP, spell checking
+pipx install grip                       # optional: C-c C-c g GitHub preview
 ```
+
+Hunspell also needs dictionaries (`*.aff`/`*.dic`) under `~/Library/Spelling/`
+or `/Library/Spelling/`; this machine uses `en_CA` with `en_US` as a fallback.
+
+Useful keys: `C-c C-c l` live preview, `C-c C-c g` Grip preview, `C-c '` edit a
+fenced code block, `C-c C-c I` toggle inline images.

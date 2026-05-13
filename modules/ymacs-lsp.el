@@ -3,6 +3,12 @@
 ;; Bigger pipe to language servers; default 4 KB chokes pyright/gopls.
 (setq read-process-output-max (* 4 1024 1024))
 
+(defun ymacs-lsp-markdown-maybe-start ()
+  "Start Marksman for Markdown buffers when the server is installed."
+  (when (and (executable-find "marksman")
+             (require 'lsp-marksman nil t))
+    (lsp-deferred)))
+
 (use-package flycheck
   :init (global-flycheck-mode))
 
@@ -67,10 +73,11 @@
         lsp-enable-xref          t
         lsp-enable-snippet       t
         lsp-keymap-prefix        "C-c L")
-  :hook ((go-mode     . lsp-deferred)
-         (python-mode . lsp-deferred)
-         (c-mode      . lsp-deferred)
-         (c++-mode    . lsp-deferred))
+  :hook ((go-mode       . lsp-deferred)
+         (python-mode   . lsp-deferred)
+         (c-mode        . lsp-deferred)
+         (c++-mode      . lsp-deferred)
+         (markdown-mode . ymacs-lsp-markdown-maybe-start))
   :config
   (setq-default flycheck-disabled-checkers
                 '(c/c++-clang c/c++-cppcheck c/c++-gcc)))

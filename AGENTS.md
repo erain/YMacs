@@ -57,6 +57,10 @@ These aren't installed by Emacs and the config will misbehave without them where
 - **Python**: `python-lsp-server[all]` (`pylsp`). The old `python-language-server` (pyls) is unmaintained.
 - **C/C++**: `ccls` (lsp-mode hooks `c-mode`/`c++-mode` to it; clang/cppcheck/gcc flycheck checkers are explicitly disabled in favor of lsp).
 - **Solidity**: `solcjs` and `solium` are hardcoded to `/usr/local/bin/` paths in `ymacs-programming.el` — adjust there if installed elsewhere.
-- **Markdown**: `multimarkdown` for `markdown-command`.
+- **Markdown**: `pandoc` is preferred for preview/export; `multimarkdown`,
+  `cmark-gfm`, `cmark`, or `markdown` are fallbacks. `marksman` enables
+  Markdown LSP when present; `grip` enables GitHub-style browser preview.
+  Hunspell dictionaries should live under `~/Library/Spelling/` or
+  `/Library/Spelling/` on macOS.
 - **Tree-sitter grammars**: installed on demand by `treesit-auto` the first time you visit a language file. A C compiler must be available.
 - **Nerd Font**: run `M-x nerd-icons-install-fonts` once for icon glyphs to render.
