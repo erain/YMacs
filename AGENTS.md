@@ -31,7 +31,7 @@ Requires **Emacs 29.1 or newer** (enforced in `init.el`). Targets Emacs 30 featu
 
 - `savefile/` — recentf, savehist, saveplace, projectile cache, bookmarks. Gitignored. Created automatically on startup if missing.
 - `elpa/` — installed packages (gitignored, repopulated on first launch).
-- `eln-cache/`, `auto-save-list/`, `tramp`, `projectile-bookmarks.eld` — generated, gitignored.
+- `eln-cache/`, `auto-save-list/`, `tramp`, `projectile-bookmarks.eld`, `tree-sitter/` — generated, gitignored.
 
 ## Working in this codebase
 

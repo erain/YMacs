@@ -19,6 +19,16 @@ piece.
 - Tree-sitter grammars are installed on demand by `treesit-auto`; accept the
   prompt the first time you visit a file in a new language.
 
+## macOS bootstrap
+
+For a repeatable setup on another Mac, see [`docs/macos-setup.md`](docs/macos-setup.md):
+
+```bash
+git clone <this-repo-url> ~/.emacs.d
+cd ~/.emacs.d
+./scripts/setup-macos.sh
+```
+
 ## Terminal use
 
 GUI-only packages (`nerd-icons`, `beacon`, `pixel-scroll-precision-mode`,

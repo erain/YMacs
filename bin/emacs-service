@@ -1,0 +1,187 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+LABEL="${EMACS_SERVICE_LABEL:-com.yiyu.emacs-daemon}"
+PLIST="${EMACS_SERVICE_PLIST:-$HOME/Library/LaunchAgents/$LABEL.plist}"
+DOMAIN="${EMACS_SERVICE_DOMAIN:-gui/$(id -u)}"
+TARGET="$DOMAIN/$LABEL"
+EMACS_BIN="${EMACS_SERVICE_EMACS_BIN:-/Applications/Emacs.app/Contents/MacOS/Emacs}"
+
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") <command>
+
+Manage the macOS LaunchAgent that runs Emacs as a daemon.
+
+Commands:
+  start       Load/start the LaunchAgent, or kick it if already loaded
+  stop        Unload/stop the LaunchAgent
+  restart     Stop, then start
+  status      Show whether the LaunchAgent is loaded/running
+  enable      Enable autostart, then start
+  disable     Stop and disable autostart until re-enabled
+  install     Create $PLIST if it does not exist
+  plist       Print the LaunchAgent plist path
+  target      Print the launchctl service target
+  help        Show this help
+
+Environment overrides:
+  EMACS_SERVICE_LABEL       default: $LABEL
+  EMACS_SERVICE_PLIST       default: $PLIST
+  EMACS_SERVICE_DOMAIN      default: $DOMAIN
+  EMACS_SERVICE_EMACS_BIN   default: $EMACS_BIN
+EOF
+}
+
+fail() {
+  printf 'emacs-service: %s\n' "$*" >&2
+  exit 1
+}
+
+require_macos() {
+  [[ "$(uname -s)" == "Darwin" ]] || fail "launchctl service management is macOS-only"
+}
+
+require_plist() {
+  [[ -f "$PLIST" ]] || fail "missing LaunchAgent plist: $PLIST (run: $(basename "$0") install)"
+}
+
+is_loaded() {
+  launchctl print "$TARGET" >/dev/null 2>&1
+}
+
+start_service() {
+  require_macos
+  require_plist
+
+  # Ignore failures here: disabled-state may not exist yet on new machines.
+  launchctl enable "$TARGET" 2>/dev/null || true
+
+  if is_loaded; then
+    printf 'Emacs service is already loaded; kickstarting %s\n' "$TARGET"
+    launchctl kickstart -k "$TARGET"
+  else
+    printf 'Starting Emacs service: %s\n' "$TARGET"
+    launchctl bootstrap "$DOMAIN" "$PLIST"
+  fi
+}
+
+stop_service() {
+  require_macos
+
+  if is_loaded; then
+    printf 'Stopping Emacs service: %s\n' "$TARGET"
+    launchctl bootout "$TARGET"
+  else
+    printf 'Emacs service is not loaded: %s\n' "$TARGET"
+  fi
+}
+
+status_service() {
+  require_macos
+
+  if ! is_loaded; then
+    printf 'Emacs service is not loaded: %s\n' "$TARGET"
+    return 1
+  fi
+
+  local tmp state pid exit_status
+  tmp="$(mktemp)"
+  launchctl print "$TARGET" >"$tmp"
+
+  state="$(awk -F'= ' '/state = / {print $2; exit}' "$tmp")"
+  pid="$(awk -F'= ' '/pid = / {print $2; exit}' "$tmp")"
+  exit_status="$(awk -F'= ' '/last exit code = / {print $2; exit}' "$tmp")"
+  rm -f "$tmp"
+
+  printf 'Emacs service is loaded: %s\n' "$TARGET"
+  [[ -n "$state" ]] && printf 'state: %s\n' "$state"
+  [[ -n "$pid" ]] && printf 'pid: %s\n' "$pid"
+  [[ -n "$exit_status" ]] && printf 'last exit: %s\n' "$exit_status"
+  printf 'plist: %s\n' "$PLIST"
+}
+
+install_plist() {
+  require_macos
+
+  [[ -e "$PLIST" ]] && fail "plist already exists: $PLIST"
+  [[ -x "$EMACS_BIN" ]] || fail "Emacs binary not executable: $EMACS_BIN"
+
+  mkdir -p "$(dirname "$PLIST")"
+  cat >"$PLIST" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>$LABEL</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>$EMACS_BIN</string>
+    <string>--fg-daemon</string>
+  </array>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>LimitLoadToSessionType</key>
+  <array>
+    <string>Aqua</string>
+  </array>
+</dict>
+</plist>
+EOF
+  chmod 0644 "$PLIST"
+  printf 'Installed LaunchAgent plist: %s\n' "$PLIST"
+}
+
+cmd="${1:-help}"
+case "$cmd" in
+  start)
+    start_service
+    status_service || true
+    ;;
+  stop)
+    stop_service
+    ;;
+  restart)
+    stop_service
+    start_service
+    status_service || true
+    ;;
+  status)
+    status_service
+    ;;
+  enable)
+    require_macos
+    launchctl enable "$TARGET" 2>/dev/null || true
+    start_service
+    status_service || true
+    ;;
+  disable)
+    require_macos
+    stop_service
+    launchctl disable "$TARGET"
+    printf 'Disabled Emacs service autostart: %s\n' "$TARGET"
+    ;;
+  install)
+    install_plist
+    ;;
+  plist)
+    printf '%s\n' "$PLIST"
+    ;;
+  target)
+    printf '%s\n' "$TARGET"
+    ;;
+  help|-h|--help)
+    usage
+    ;;
+  *)
+    usage >&2
+    exit 2
+    ;;
+esac
