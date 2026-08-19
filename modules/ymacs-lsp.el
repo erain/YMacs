@@ -1,6 +1,7 @@
 ;;; ymacs-lsp.el --- lsp-mode + company + flycheck -*- lexical-binding: t; -*-
 
 ;; Bigger pipe to language servers; default 4 KB chokes pyright/gopls.
+(require 'ymacs-packages)
 (setq read-process-output-max (* 4 1024 1024))
 
 (defun ymacs-lsp-markdown-maybe-start ()
@@ -38,31 +39,33 @@
   (setq company-quickhelp-delay 0.1)
   (company-quickhelp-mode))
 
-(use-package hydra
-  :defer 2
-  :bind ("C-c l" . hydra-lsp/body))
+(eval-when-compile
+  (require 'hydra))
 
-(defhydra hydra-lsp (:exit t :hint nil)
-  "
+(use-package hydra
+  :bind ("C-c l" . hydra-lsp/body)
+  :config
+  (defhydra hydra-lsp (:exit t :hint nil)
+    "
  Buffer^^               Server^^                   Symbol
 -------------------------------------------------------------------------------------
  [_f_] format           [_M-r_] restart            [_D_] declaration  [_i_] implementation  [_o_] documentation
  [_m_] imenu            [_S_]   shutdown           [_d_] definition   [_t_] type            [_R_] rename
  [_x_] execute action   [_M-s_] describe session   [_r_] references   [_s_] signature"
-  ("D"   lsp-find-declaration)
-  ("d"   lsp-ui-peek-find-definitions)
-  ("r"   lsp-ui-peek-find-references)
-  ("i"   lsp-ui-peek-find-implementation)
-  ("t"   lsp-find-type-definition)
-  ("s"   lsp-signature-help)
-  ("o"   lsp-describe-thing-at-point)
-  ("R"   lsp-rename)
-  ("f"   lsp-format-buffer)
-  ("m"   lsp-ui-imenu)
-  ("x"   lsp-execute-code-action)
-  ("M-s" lsp-describe-session)
-  ("M-r" lsp-workspace-restart)
-  ("S"   lsp-workspace-shutdown))
+    ("D"   lsp-find-declaration)
+    ("d"   lsp-ui-peek-find-definitions)
+    ("r"   lsp-ui-peek-find-references)
+    ("i"   lsp-ui-peek-find-implementation)
+    ("t"   lsp-find-type-definition)
+    ("s"   lsp-signature-help)
+    ("o"   lsp-describe-thing-at-point)
+    ("R"   lsp-rename)
+    ("f"   lsp-format-buffer)
+    ("m"   lsp-ui-imenu)
+    ("x"   lsp-execute-code-action)
+    ("M-s" lsp-describe-session)
+    ("M-r" lsp-workspace-restart)
+    ("S"   lsp-workspace-shutdown)))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)

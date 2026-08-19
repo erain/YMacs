@@ -2,11 +2,12 @@
 
 (require 'thingatpt)
 (require 'cl-lib)
+(require 'ymacs-packages)
 
 (defun ymacs-recompile-init ()
   "Byte-compile all of YMacs again."
   (interactive)
-  (byte-recompile-directory ymacs-dir 0))
+  (byte-recompile-directory ymacs-modules-dir 0))
 
 (setq select-enable-clipboard t)
 
@@ -175,7 +176,7 @@
 
 ;; Start the server so emacsclient works on every platform.
 (require 'server)
-(unless (server-running-p)
+(unless (or noninteractive (daemonp) (server-running-p))
   (server-start))
 
 (use-package treemacs
@@ -210,9 +211,11 @@
         treemacs-tag-follow-cleanup            t
         treemacs-tag-follow-delay              1.5
         treemacs-width                         35)
-  (treemacs-follow-mode 1)
-  (treemacs-filewatch-mode 1)
-  (treemacs-fringe-indicator-mode 1)
+  (unless noninteractive
+    (treemacs-follow-mode 1)
+    (treemacs-filewatch-mode 1)
+    (when (display-graphic-p)
+      (treemacs-fringe-indicator-mode 1)))
   (pcase (cons (and (executable-find "git") t)
                (and treemacs-python-executable t))
     (`(t . t) (treemacs-git-mode 'deferred))

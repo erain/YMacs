@@ -2,6 +2,7 @@
 
 ;; Markdown: GitHub-flavoured editing, pleasant prose layout and previews.
 (require 'ispell)
+(require 'ymacs-packages)
 
 (use-package flyspell
   :ensure nil
@@ -109,24 +110,23 @@
 
 
 ;; Go mode
-(use-package go-mode
-  :bind ("C-c C-t" . save-and-test-go-program)
-  :config
-  (add-hook 'go-mode-hook (lambda ()
-			    (setq tab-width 2)
-			    (setq indent-tabs-mode nil) ))
-  (setq gofmt-command (cond
-		       ((executable-find "goimports")
-			"goimports")
-		       (t "gofmt")))
-  )
-
-(defun save-and-test-go-program()
-  "Save any unsaved buffers and compile"
+(defun save-and-test-go-program ()
+  "Save any unsaved buffers and compile."
   (interactive)
   (save-some-buffers t)
-  (compile "go test -v")
-  )
+  (compile "go test -v"))
+
+(use-package go-mode
+  :bind (:map go-mode-map
+         ("C-c C-t" . save-and-test-go-program))
+  :config
+  (add-hook 'go-mode-hook (lambda ()
+                            (setq tab-width 2)
+                            (setq indent-tabs-mode nil)))
+  (setq gofmt-command (cond
+                       ((executable-find "goimports")
+                        "goimports")
+                       (t "gofmt"))))
 
 
 ;; C mode

@@ -1,5 +1,7 @@
 ;;; ymacs-global-keybindings.el --- Some useful keybindings -*- lexical-binding: t; -*-
 
+(require 'ymacs-packages)
+
 ;; crux related
 (use-package crux)
 

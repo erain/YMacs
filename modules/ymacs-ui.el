@@ -3,6 +3,8 @@
 ;; Tool-bar / menu-bar / scroll-bar are killed in early-init.el so the
 ;; first frame is drawn without them.
 
+(require 'ymacs-packages)
+
 (blink-cursor-mode -1)
 (setq-default cursor-type 'bar)
 

@@ -4,6 +4,8 @@
 ;; - https://tuhdo.github.io/helm-intro.html
 ;; - https://tuhdo.github.io/helm-projectile.html
 
+(require 'ymacs-packages)
+
 (use-package helm
   :diminish helm-mode
   :bind (("M-x"     . helm-M-x)
